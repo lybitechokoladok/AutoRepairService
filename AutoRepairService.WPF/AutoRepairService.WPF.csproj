@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\visual_Studio_project\AutoRepairService\AutoRepairService.WPF\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\visual_Studio_project\AutoRepairService\AutoRepairService.WPF\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoRepairService.Domain\AutoRepairService.Domain.csproj" />
+    <ProjectReference Include="..\AutoRepairService.Infrastructure\AutoRepairService.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
