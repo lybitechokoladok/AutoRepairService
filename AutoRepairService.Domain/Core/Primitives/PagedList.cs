@@ -1,5 +1,6 @@
 ﻿using AutoRepairService.Domain.Core.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -25,10 +26,10 @@ namespace AutoRepairService.Domain.Core.Primitives
 
             int pointer = 0;
             foreach (var item in splits)
-            {
+        {
                 Items.Add(pointer, item);
                 pointer++;
-            }
+        }
 
             CurrentItem = Items.First().Value;
             CurrentPage = Items.First().Key;
@@ -41,8 +42,6 @@ namespace AutoRepairService.Domain.Core.Primitives
 
         public void Previous() 
         {
-            CurrentPage--;
-            CurrentItem = Items.First(x => x.Key == CurrentPage).Value;
         }
     }
 }
