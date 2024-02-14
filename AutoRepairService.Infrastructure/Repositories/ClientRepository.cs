@@ -1,5 +1,8 @@
-﻿using AutoRepairService.Domain.Models;
+﻿using AutoRepairService.Domain.Core.Primitives.Maybe;
+using AutoRepairService.Domain.Core.Primitives.Result;
+using AutoRepairService.Domain.Models;
 using AutoRepairService.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +13,31 @@ namespace AutoRepairService.Infrastructure.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        public Task ChangeClientTagAsync(Client client)
+        private readonly AutoRepairServiceDbContext _context;
+
+        public ClientRepository(AutoRepairServiceDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<Client>> GetAllAsync()
+        public async Task<IEnumerable<Client>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var clients = await _context.Set<Client>().ToListAsync();
+
+            if (clients is null)
+                return Enumerable.Empty<Client>();
+            else
+                return clients;
         }
 
-        public Task<Client> GetClientByIdAsync(int id)
+        public async Task<Maybe<Client>> GetClientByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var client = await _context.Set<Client>().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (client is null)
+                return Maybe<Client>.None;
+            else
+                return Maybe<Client>.From(client);
         }
     }
 }

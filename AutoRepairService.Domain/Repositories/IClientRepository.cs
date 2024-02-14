@@ -1,4 +1,6 @@
-﻿using AutoRepairService.Domain.Models;
+﻿using AutoRepairService.Domain.Core.Primitives.Maybe;
+using AutoRepairService.Domain.Core.Primitives.Result;
+using AutoRepairService.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,7 @@ namespace AutoRepairService.Domain.Repositories
 {
     public interface IClientRepository
     {
-        Task<Client> GetClientByIdAsync(int id);
+        Task<Maybe<Client>> GetClientByIdAsync(int id);
         Task<IEnumerable<Client>> GetAllAsync();
-        Task ChangeClientTagAsync(Client client);
     }
 }
