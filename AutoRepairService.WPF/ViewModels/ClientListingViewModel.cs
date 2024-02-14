@@ -30,15 +30,15 @@ namespace AutoRepairService.WPF.ViewModels
 
             ClientCollectionView = CollectionViewSource.GetDefaultView(_clients);
 
-            LoadClientCommand = new AsyncRelayCommand(LoadAllClient);
-            Task.Run(async () => await LoadClientCommand.ExecuteAsync(null));
+            LoadClientCommand = new RelayCommand(LoadAllClient);
+            LoadClientCommand.Execute(null);
         }
 
-        public IAsyncRelayCommand LoadClientCommand { get; }
+        public IRelayCommand LoadClientCommand { get; }
 
-        private async Task LoadAllClient()
+        private void LoadAllClient()
         {
-            var clients = await _clientRepository.GetAllAsync();
+            var clients = _clientRepository.GetAll();
 
             _clients.Clear();
 
