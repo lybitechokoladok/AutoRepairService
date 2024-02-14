@@ -4,11 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoRepairService.WPF"
+        xmlns:vm="clr-namespace:AutoRepairService.WPF.ViewModels"
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock>
-            <Run/>
-        </TextBlock>
+        <ContentControl
+            Content="{Binding CurrentViewModel}"/>
+
+        <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsOpen}">
+            <ContentControl Content="{Binding CuurentModalViewModel}"/>
+        </custom:Modal>
     </Grid>
 </Window>
