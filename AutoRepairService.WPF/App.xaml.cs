@@ -7,6 +7,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using AutoRepairService.WPF.ViewModels;
+using AutoRepairService.WPF.HostBuilders;
 
 namespace AutoRepairService.WPF
 {
@@ -21,6 +24,7 @@ namespace AutoRepairService.WPF
                 .ConfigureServices((context,services) =>
                 {
                     services.AddInfrastructure(context.Configuration);
+                    services.AddViewModels();
                 })
                 .Build();
         }
@@ -28,6 +32,9 @@ namespace AutoRepairService.WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             _host.Start();
+
+            MainWindow = _host.Services.GetRequiredService<MainWindow>();
+            MainWindow.Show();
 
             base.OnStartup(e);
         }
