@@ -65,7 +65,7 @@ namespace AutoRepairService.Infrastructure.Repositories
                 return client;
         }
 
-        public async Task<IEnumerable<ClientDto>> GetClientOffset(int size, int cursor)
+        public async Task<IEnumerable<ClientDto>> GetClientOffsetAsync(int size, int cursor)
         {
             var query = _context.Clients
                 .Select(s => new ClientDto

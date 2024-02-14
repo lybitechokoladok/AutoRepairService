@@ -29,9 +29,9 @@ namespace AutoRepairService.WPF
                 .Build();
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void  OnStartup(StartupEventArgs e)
         {
-            _host.Start();
+            await _host.StartAsync();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();

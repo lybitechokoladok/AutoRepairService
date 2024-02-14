@@ -7,18 +7,18 @@ using System.Windows.Input;
 
 namespace AutoRepairService.WPF.Commands
 {
-    public abstract class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private Action<object> _execute;
         private Predicate<object> _predicate;
 
-        protected RelayCommand(Action<object> execute, Predicate<object> predicate)
+        public RelayCommand(Action<object> execute, Predicate<object> predicate)
         {
             _execute = execute;
             _predicate = predicate;
         }
 
-        protected RelayCommand(Action<object> execute)
+        public RelayCommand(Action<object> execute)
         {
             _execute = execute;
             _predicate = null;
