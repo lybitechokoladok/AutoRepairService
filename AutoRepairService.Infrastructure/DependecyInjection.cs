@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoRepairService.Domain.Repositories;
 using AutoRepairService.Infrastructure.Repositories;
+using AutoRepairService.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AutoRepairService.Infrastructure
 {
@@ -18,6 +20,7 @@ namespace AutoRepairService.Infrastructure
             string connectionString = configuration.GetConnectionString("Default");
 
             services.AddDbContext<AutoRepairServiceDbContext>(options => options.UseSqlServer(connectionString));
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
 

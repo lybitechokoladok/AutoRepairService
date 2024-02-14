@@ -7,9 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid ItemsSource="{Binding Clients}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Content="Load"
+                Command="{Binding LoadClientCommand}"/>
+        <DataGrid 
+            Grid.Row="1"
+            ItemsSource="{Binding ClientCollectionView}">
             <DataGrid.Columns>
-                <DataGridTextColumn />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

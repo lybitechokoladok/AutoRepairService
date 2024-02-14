@@ -1,6 +1,5 @@
 ﻿using AutoRepairService.Domain.Dtos;
 using AutoRepairService.Domain.Repositories;
-using AutoRepairService.WPF.Commands;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -32,7 +31,7 @@ namespace AutoRepairService.WPF.ViewModels
             ClientCollectionView = CollectionViewSource.GetDefaultView(_clients);
 
             LoadClientCommand = new AsyncRelayCommand(LoadAllClient);
-            LoadClientCommand.Execute(null);
+            Task.Run(async () => await LoadClientCommand.ExecuteAsync(null));
         }
 
         public IAsyncRelayCommand LoadClientCommand { get; }

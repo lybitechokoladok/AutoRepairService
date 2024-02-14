@@ -15,7 +15,6 @@ namespace AutoRepairService.Infrastructure.Repositories
     public class ClientRepository : IClientRepository
     {
         private readonly AutoRepairServiceDbContext _context;
-
         public ClientRepository(AutoRepairServiceDbContext context)
         {
             _context = context;
@@ -36,6 +35,28 @@ namespace AutoRepairService.Infrastructure.Repositories
                     Phone = Phone.Create(s.Phone).Value,
                     PhotoPath = s.PhotoPath,
                 }).ToListAsync();
+
+            if (clients is null)
+                return Enumerable.Empty<ClientDto>();
+            else
+                return clients;
+        }
+
+        public  IEnumerable<ClientDto> GetAll()
+        {
+            var clients = _context.Clients
+                .Select(s => new ClientDto
+                {
+                    Id = s.Id,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Patronomic = s.Patronymic,
+                    Birthday = s.Birthday.Value.Date,
+                    RegistrationDate = s.RegistrationDate,
+                    Email = Email.Create(s.Email).Value,
+                    Phone = Phone.Create(s.Phone).Value,
+                    PhotoPath = s.PhotoPath,
+                }).ToList();
 
             if (clients is null)
                 return Enumerable.Empty<ClientDto>();

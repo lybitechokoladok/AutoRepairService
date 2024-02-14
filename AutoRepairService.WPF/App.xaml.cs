@@ -10,6 +10,8 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using AutoRepairService.WPF.ViewModels;
 using AutoRepairService.WPF.HostBuilders;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace AutoRepairService.WPF
 {
@@ -21,6 +23,11 @@ namespace AutoRepairService.WPF
         {
             _host = Host
                 .CreateDefaultBuilder()
+                .ConfigureAppConfiguration(c => 
+                {
+                    c.AddJsonFile("appsettings.json");
+                    c.AddEnvironmentVariables();
+                })
                 .ConfigureServices((context,services) =>
                 {
                     services.AddInfrastructure(context.Configuration);

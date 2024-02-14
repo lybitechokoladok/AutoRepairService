@@ -13,6 +13,7 @@ namespace AutoRepairService.Domain.Repositories
     {
         Task<Maybe<ClientDto>> GetClientByIdAsync(int id);
         Task<IEnumerable<ClientDto>> GetAllAsync();
+        IEnumerable<ClientDto> GetAll();
         Task<IEnumerable<ClientDto>> GetClientOffsetAsync(int size, int cursor);
     }
 }
