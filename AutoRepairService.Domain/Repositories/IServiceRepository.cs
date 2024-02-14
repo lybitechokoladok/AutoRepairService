@@ -1,4 +1,5 @@
-﻿using AutoRepairService.Domain.Models;
+﻿using AutoRepairService.Domain.Core.Primitives.Maybe;
+using AutoRepairService.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace AutoRepairService.Domain.Repositories
 {
     public interface IServiceRepository
     {
-        Task<Service> GetServiceByIdAsync(int id);
-        Task<Service> GetAllServiceAsync();
+        Task<Maybe<Service>> GetServiceByIdAsync(int id);
+        Task<IEnumerable<Service>> GetAllServiceAsync();
     }
 }
