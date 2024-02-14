@@ -17,11 +17,6 @@ namespace AutoRepairService.Infrastructure
         {
             
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source = (local)\\SQLEXPRESS; Initial Catalog = Service; Integrated Security = True; Trusted_Connection = True; TrustServerCertificate = True;");
-        }
         public  DbSet<Client> Clients { get; set; }
 
         public  DbSet<ClientService> ClientServices { get; set; }
