@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoRepairService.Domain.Models
+namespace AutoRepairService.Domain.Dtos
 {
-    public class Tag
+    public class TagDto
     {
-        public Tag()
+        public TagDto()
         {
             
         }
-        public Tag(int id, string title, string color)
+        public TagDto(int id, string title, string color)
         {
             Id = id;
             Title = title;

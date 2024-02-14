@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoRepairService.Domain.Models
+namespace AutoRepairService.Domain.Dtos
 {
-    public class AttachedProduct
+    public class AttachedProductDto
     {
         public int MainProductId { get; private set; }
         public int AttachedProductId { get; private set; }
 
-        public AttachedProduct()
+        public AttachedProductDto()
         {
             
         }
-        public AttachedProduct(Product mainProduct,Product attachedProduct )
+        public AttachedProductDto(ProductDto mainProduct,ProductDto attachedProduct )
         {
             MainProductId = mainProduct.Id;
             AttachedProductId = attachedProduct.Id;

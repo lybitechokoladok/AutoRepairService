@@ -1,4 +1,5 @@
 ﻿using AutoRepairService.Domain.Core.Primitives;
+using AutoRepairService.Domain.Core.Primitives.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,16 @@ namespace AutoRepairService.Domain.ValueObjects
         public const int MaxLength = 20;
         public string Value { get; }
 
-        public Phone(string value)
+        private Phone(string value)
         {
             Value = value;
         }
 
+        public static implicit operator string(Phone phone) => phone.Value;
+
+        public static Result<Phone> Create(string phone)
+            => Result.Create(phone, "")
+                     .Map(p=> new Phone(p));
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;

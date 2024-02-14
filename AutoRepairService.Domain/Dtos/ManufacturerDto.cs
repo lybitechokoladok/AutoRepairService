@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoRepairService.Domain.Models
+namespace AutoRepairService.Domain.Dtos
 {
-    public class Manufacturer
+    public class ManufacturerDto
     {
-        public Manufacturer()
+        public ManufacturerDto()
         {
             
         }
@@ -16,7 +16,7 @@ namespace AutoRepairService.Domain.Models
         public string Name { get; set; }
         public DateTime StartDate{ get; set; }
 
-        public Manufacturer(int id, string name, DateTime startDate)
+        public ManufacturerDto(int id, string name, DateTime startDate)
         {
             Id = id;
             Name = name;

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoRepairService.Domain.Models
+namespace AutoRepairService.Domain.Dtos
 {
-    public class Product
+    public class ProductDto
     {
-        public Product()
+        public ProductDto()
         {
             
         }
-        public Product(int id, string title, string description, string mainImagePath, bool isActive, int manufacturerId)
+        public ProductDto(int id, string title, string description, string mainImagePath, bool isActive, int manufacturerId)
         {
             Id = id;
             Title = title;

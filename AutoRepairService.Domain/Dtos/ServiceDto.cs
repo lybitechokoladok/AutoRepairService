@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoRepairService.Domain.Models
+namespace AutoRepairService.Domain.Dtos
 {
-    public class Service
+    public class ServiceDto
     {
-        public Service()
+        public ServiceDto()
         {
             
         }
-        protected Service(int id, string title, double cost, int durationInSeconds, string? description, float? discount, string? mainImagePath)
+        protected ServiceDto(int id, string title, double cost, int durationInSeconds, string? description, float? discount, string? mainImagePath)
         {
             Id = id;
             Title = title;
@@ -31,8 +31,8 @@ namespace AutoRepairService.Domain.Models
         public float? Discount { get; private set; }
         public string? MainImagePath { get; private set; }
 
-        public static Service Create(int id, string title, double cost, int durationInSeconds, string? description, float? discount, string? mainImagePath)
-        => new Service(id, title, cost, durationInSeconds, description, discount, mainImagePath);
+        public static ServiceDto Create(int id, string title, double cost, int durationInSeconds, string? description, float? discount, string? mainImagePath)
+        => new ServiceDto(id, title, cost, durationInSeconds, description, discount, mainImagePath);
 
         public IEnumerable<string> DocumentPaths { get; }
     }
