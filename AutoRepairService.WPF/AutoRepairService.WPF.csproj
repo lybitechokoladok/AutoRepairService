@@ -34,4 +34,9 @@
     <ProjectReference Include="..\AutoRepairService.Infrastructure\AutoRepairService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>
