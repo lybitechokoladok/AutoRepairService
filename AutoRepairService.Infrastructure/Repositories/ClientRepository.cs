@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,92 +21,53 @@ namespace AutoRepairService.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<ClientDto>> GetAllAsync()
+        public async Task<IEnumerable<Client>> GetAllAsync()
         {
-            var clients = await _context.Clients
-                .Select(s => new ClientDto
-                {
-                    Id = s.Id,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    Patronomic = s.Patronymic,
-                    Birthday = s.Birthday.Value.Date,
-                    RegistrationDate = s.RegistrationDate,
-                    Email = Email.Create(s.Email).Value,
-                    Phone = Phone.Create(s.Phone).Value,
-                    PhotoPath = s.PhotoPath,
-                }).ToListAsync();
+            var clients = await _context.Clients.ToListAsync();
 
             if (clients is null)
-                return Enumerable.Empty<ClientDto>();
+                return Enumerable.Empty<Client>();
             else
                 return clients;
         }
 
-        public  IEnumerable<ClientDto> GetAll()
+        public  IEnumerable<Client> GetAll()
         {
-            var clients = _context.Clients
-                .Select(s => new ClientDto
-                {
-                    Id = s.Id,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    Patronomic = s.Patronymic,
-                    Birthday = s.Birthday.Value.Date,
-                    RegistrationDate = s.RegistrationDate,
-                    Email = Email.Create(s.Email).Value,
-                    Phone = Phone.Create(s.Phone).Value,
-                    PhotoPath = s.PhotoPath,
-                }).ToList();
+            var clients = _context.Clients.ToList();
 
             if (clients is null)
-                return Enumerable.Empty<ClientDto>();
+                return Enumerable.Empty<Client>();
             else
                 return clients;
         }
 
-        public async Task<Maybe<ClientDto>> GetClientByIdAsync(int id)
+        public async Task<Maybe<Client>> GetClientByIdAsync(int id)
         {
-            var client = await _context.Clients
-                .Select(s => new ClientDto
-                {
-                    Id = s.Id,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    Patronomic = s.Patronymic,
-                    Birthday = s.Birthday.Value.Date,
-                    RegistrationDate = s.RegistrationDate,
-                    Email = Email.Create(s.Email).Value,
-                    Phone = Phone.Create(s.Phone).Value,
-                    PhotoPath = s.PhotoPath,
-                }).SingleOrDefaultAsync(x=> x.Id == id);
+            var client = await _context.Clients.SingleOrDefaultAsync(x=> x.Id == id);
 
             if (client is null)
-                return Maybe<ClientDto>.From(client);
+                return Maybe<Client>.From(client);
             else 
                 return client;
         }
 
-        public async Task<IEnumerable<ClientDto>> GetClientOffsetAsync(int size, int cursor)
+        public async Task<IEnumerable<Client>> GetNextClientOffsetAsync(int size,int cursor)
         {
-            var query = _context.Clients
-                .Select(s => new ClientDto
-                {
-                   Id = s.Id,
-                   FirstName = s.FirstName,
-                   LastName = s.LastName,
-                   Patronomic = s.Patronymic,
-                   Birthday = s.Birthday.Value.Date,
-                   RegistrationDate = s.RegistrationDate,
-                   Email = Email.Create(s.Email).Value,
-                   Phone = Phone.Create(s.Phone).Value,
-                   PhotoPath = s.PhotoPath,
-                });
-
-             var pagedClients = await query
-                .Where(s=> s.Id < cursor)
+             var pagedClients = await _context.Clients
+                .Where(s => s.Id > cursor)
                 .Take(size)
                 .ToListAsync();
+
+            return pagedClients;
+        }
+        public async Task<IEnumerable<Client>> GetPreviosClientOffsetAsync(int size,int cursor)
+        {
+
+            var pagedClients = await _context.Clients
+               .Where(x=> x.Id < cursor)
+               .Skip(cursor - size)
+               .Take(size)
+               .ToListAsync();
 
             return pagedClients;
         }

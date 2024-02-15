@@ -4,6 +4,7 @@ using AutoRepairService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,10 @@ namespace AutoRepairService.Domain.Repositories
 {
     public interface IClientRepository
     {
-        Task<Maybe<ClientDto>> GetClientByIdAsync(int id);
-        Task<IEnumerable<ClientDto>> GetAllAsync();
-        IEnumerable<ClientDto> GetAll();
-        Task<IEnumerable<ClientDto>> GetClientOffsetAsync(int size, int cursor);
+        Task<Maybe<Client>> GetClientByIdAsync(int id);
+        Task<IEnumerable<Client>> GetAllAsync();
+        IEnumerable<Client> GetAll();
+        Task<IEnumerable<Client>> GetNextClientOffsetAsync(int size, int cursor);
+        Task<IEnumerable<Client>> GetPreviosClientOffsetAsync(int size,int cursor);
     }
 }

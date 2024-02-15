@@ -8,16 +8,36 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button Content="Load"
-                Command="{Binding LoadClientCommand}"/>
         <DataGrid 
-            Grid.Row="1"
+            Grid.Row="0"
             ItemsSource="{Binding ClientCollectionView}">
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>
+
+        <DockPanel
+            Grid.Row="1"
+            Width="200"
+            HorizontalAlignment="Center">
+            <Button
+                HorizontalAlignment="Left"
+                Command="{Binding MoveToPreviosPageCommand}"
+                Content= "&lt;"
+                Width="30"/>
+            <TextBlock
+                HorizontalAlignment="Center">
+                <Run Text="{Binding CurrentPage}"/>
+                <Run Text=" - "/>
+                <Run Text="{Binding TotalPage}"/>
+            </TextBlock>
+            <Button
+                HorizontalAlignment="Right"
+                Content= "&gt;"
+                Command="{Binding MoveToNextPageCommand}"
+                 Width="30"/>
+        </DockPanel>
     </Grid>
 </UserControl>
