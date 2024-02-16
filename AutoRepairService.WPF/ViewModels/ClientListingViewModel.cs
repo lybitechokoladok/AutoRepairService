@@ -16,8 +16,9 @@ using System.Windows.Input;
 
 namespace AutoRepairService.WPF.ViewModels
 {
-    public class ClientListingViewModel : ObservableObject
+    public partial class ClientListingViewModel : ObservableObject
     {
+        [ObservableProperty]
         private int _cursor = 0;
 
         private readonly IClientRepository _clientRepository;
@@ -25,6 +26,15 @@ namespace AutoRepairService.WPF.ViewModels
         private ObservableCollection<Client> _clients;
 
         public ICollectionView ClientCollectionView { get; }
+
+        [ObservableProperty]
+        private int currentPage = 0;
+
+        [ObservableProperty]
+        private int totalPage;
+
+        [ObservableProperty]
+        private int recordsCount;
 
         public IAsyncRelayCommand LoadClientOffsetCommand { get; }
         public IAsyncRelayCommand MoveToNextPageCommand { get; }
@@ -46,7 +56,7 @@ namespace AutoRepairService.WPF.ViewModels
 
         private async Task LoadPreviosClientOffset()
         {
-            var clientOffset = await _clientRepository.GetPreviosClientOffsetAsync(20, _cursor);
+            var clientOffset = await _clientRepository.GetPreviosClientOffsetAsync(20, Cursor);
 
             _clients.Clear();
 
@@ -55,12 +65,18 @@ namespace AutoRepairService.WPF.ViewModels
                 _clients.Add(client);
             }
 
-            _cursor = clientOffset.ToList()[0].Id;
+            if (CurrentPage != TotalPage)
+                CurrentPage--;
+            Cursor = clientOffset.ToList()[^1].Id;
         }
 
         private async Task LoadClientOffset()
         {
-            var clientOffset = await _clientRepository.GetNextClientOffsetAsync(20, _cursor);
+            RecordsCount = await _clientRepository.GetClientsCountAsync();
+
+            TotalPage = RecordsCount / 20;
+
+            var clientOffset = await _clientRepository.GetNextClientOffsetAsync(20, Cursor);
 
             _clients.Clear();
 
@@ -69,7 +85,9 @@ namespace AutoRepairService.WPF.ViewModels
                 _clients.Add(client);
             }
 
-            _cursor = clientOffset.ToList()[^1].Id;
+            if (Cursor != 0)
+                CurrentPage++;
+            Cursor = clientOffset.ToList()[^1].Id;
         }
     }
 }

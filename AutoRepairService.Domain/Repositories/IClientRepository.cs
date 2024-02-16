@@ -17,5 +17,6 @@ namespace AutoRepairService.Domain.Repositories
         IEnumerable<Client> GetAll();
         Task<IEnumerable<Client>> GetNextClientOffsetAsync(int size, int cursor);
         Task<IEnumerable<Client>> GetPreviosClientOffsetAsync(int size,int cursor);
+        Task<int> GetClientsCountAsync();
     }
 }

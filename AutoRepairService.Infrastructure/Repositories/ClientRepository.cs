@@ -64,12 +64,12 @@ namespace AutoRepairService.Infrastructure.Repositories
         {
 
             var pagedClients = await _context.Clients
-               .Where(x=> x.Id < cursor)
-               .Skip(cursor - size)
-               .Take(size)
+               .Where (s => s.Id <= cursor - size && s.Id > cursor-(2*size))
                .ToListAsync();
 
             return pagedClients;
         }
+
+        public Task<int> GetClientsCountAsync() => _context.Clients.CountAsync();
     }
 }
