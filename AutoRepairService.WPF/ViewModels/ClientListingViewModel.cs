@@ -28,7 +28,7 @@ namespace AutoRepairService.WPF.ViewModels
         public ICollectionView ClientCollectionView { get; }
 
         [ObservableProperty]
-        private int currentPage = 0;
+        private int currentPage = 1;
 
         [ObservableProperty]
         private int totalPage;
