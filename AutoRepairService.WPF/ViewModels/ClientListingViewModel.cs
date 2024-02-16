@@ -23,7 +23,7 @@ namespace AutoRepairService.WPF.ViewModels
 
         private readonly IClientRepository _clientRepository;
 
-        private ObservableCollection<Client> _clients;
+        private ObservableCollection<ClientListingItemViewModel> _clients;
 
         public ICollectionView ClientCollectionView { get; }
 
@@ -36,12 +36,18 @@ namespace AutoRepairService.WPF.ViewModels
         [ObservableProperty]
         private int recordsCount;
 
+        [ObservableProperty]
+        private bool isStartPage = true;
+
+        [ObservableProperty]
+        private bool isEndPage;
+
         public IAsyncRelayCommand LoadClientOffsetCommand { get; }
         public IAsyncRelayCommand MoveToNextPageCommand { get; }
         public IAsyncRelayCommand MoveToPreviosPageCommand { get; }
         public ClientListingViewModel(IClientRepository clientRepository)
         {
-            _clients = new ObservableCollection<Client>();
+            _clients = new ObservableCollection<ClientListingItemViewModel>();
 
             _clientRepository = clientRepository;
 
@@ -62,19 +68,33 @@ namespace AutoRepairService.WPF.ViewModels
 
             foreach (Client client in clientOffset)
             {
-                _clients.Add(client);
+                AddClient(client);
             }
 
-            if (CurrentPage != TotalPage)
-                CurrentPage--;
+
+            CurrentPage--;
+
             Cursor = clientOffset.ToList()[^1].Id;
+
+            IsStartPage = CurrentPage == 1 ? true : false;
+            IsEndPage = CurrentPage == TotalPage ? true : false;
+        }
+
+        private void AddClient(Client client)
+        {
+            ClientListingItemViewModel itemViewModel =
+                new ClientListingItemViewModel(client);
+            _clients.Add(itemViewModel);
         }
 
         private async Task LoadClientOffset()
         {
-            RecordsCount = await _clientRepository.GetClientsCountAsync();
+            if (recordsCount == 0)
+            {
+                RecordsCount = await _clientRepository.GetClientsCountAsync();
 
-            TotalPage = RecordsCount / 20;
+                TotalPage = RecordsCount / 20;
+            }
 
             var clientOffset = await _clientRepository.GetNextClientOffsetAsync(20, Cursor);
 
@@ -82,12 +102,16 @@ namespace AutoRepairService.WPF.ViewModels
 
             foreach (Client client in clientOffset)
             {
-                _clients.Add(client);
+                AddClient(client);
             }
+
 
             if (Cursor != 0)
                 CurrentPage++;
             Cursor = clientOffset.ToList()[^1].Id;
+
+            IsEndPage = CurrentPage == TotalPage ? true : false;
+            IsStartPage = CurrentPage == 1 ? true : false;
         }
     }
 }

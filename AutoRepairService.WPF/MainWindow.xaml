@@ -8,7 +8,8 @@
         xmlns:v ="clr-namespace:AutoRepairService.WPF.Views"
         xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Background="#f1f1f1">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:ClientListingViewModel}">
             <v:ClientListnigViewModel/>
@@ -16,6 +17,7 @@
     </Window.Resources>
     <Grid>
         <ContentControl
+            Margin="50"
             Content="{Binding CurrentViewModel}"/>
 
         <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsOpen}">

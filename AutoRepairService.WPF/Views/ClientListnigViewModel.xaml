@@ -4,39 +4,179 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoRepairService.WPF.Views"
+             xmlns:components="clr-namespace:AutoRepairService.WPF.Components"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid 
-            Grid.Row="0"
-            ItemsSource="{Binding ClientCollectionView}">
-            <DataGrid.Columns>
-            </DataGrid.Columns>
-        </DataGrid>
 
-        <TextBlock
+        <Border
+            CornerRadius="15"
+            Grid.Row="0"
+            Margin="20 0 20 0"
+            BorderThickness="1">
+            <DockPanel>
+                <StackPanel
+                Orientation="Horizontal">
+                    <Grid>
+                        <TextBox
+                    x:Name="SearchText"
+                    Text="{Binding RequestFilter, UpdateSourceTrigger=PropertyChanged}"
+                    Foreground="white"
+                    Height="30" Width="300"
+                    FontSize="24"
+                    VerticalContentAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Padding="10 0 0 0"
+                    Background="#323D4B"
+                    BorderThickness="0">
+                            <TextBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="2"/>
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+
+                        <TextBlock 
+                    IsHitTestVisible="False"
+                    Text="Поиск по параметрам"
+                    Foreground="white"
+                    FontSize="14"
+                    VerticalAlignment="Bottom"
+                    Margin="10 0 0 5">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=SearchText}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <fa:IconBlock 
+                        Icon="MagnifyingGlass"
+                        Foreground="White"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 10 0"/>
+                    </Grid>
+
+                    <RibbonComboBox
+                        VerticalAlignment="Bottom"
+                        Margin="50 0 0 0"
+                        Label="Сортировка:"
+                        SelectionBoxWidth="70"
+                        Text="Пол"
+                        IsEditable="True"
+                        Foreground="Black"
+                        Background="Transparent">
+                        <RibbonGallery
+                            SelectedValue="Все"
+                            SelectedValuePath="Content"
+                            MaxColumnCount="1">
+                            <RibbonGalleryCategory>
+                                <RibbonGalleryItem Content="Все" Foreground="#0d61af"/>
+                                <RibbonGalleryItem Content="Мужчина" Foreground="#0d61af"/>
+                                <RibbonGalleryItem Content="Женщина" Foreground="#0d61af"/>
+                            </RibbonGalleryCategory>
+                        </RibbonGallery>
+                    </RibbonComboBox>
+                </StackPanel>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Bottom">
+                    <RadioButton Content="10">
+                    </RadioButton>
+                    <RadioButton Content="50">
+                    </RadioButton>
+                    <RadioButton Content="200">
+                    </RadioButton>
+                    <RadioButton Content="Все">
+                    </RadioButton>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <ListView 
+            Margin="20"
+            BorderThickness="0"
             Grid.Row="1"
+            Background="Transparent"
+            ItemsSource="{Binding ClientCollectionView}"
+            VirtualizingPanel.IsVirtualizing="True">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <components:ClientListingItem Margin="20" Background="White"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+
+        
+        <TextBlock
+            Grid.Row="2"
+            Margin="20 0 0 0"
+            FontSize="20"
             HorizontalAlignment="Left">
             <Run Text="{Binding Cursor}"/>
             <Run Text="из"/>
             <Run Text="{Binding RecordsCount}"/>
         </TextBlock>
         <DockPanel
-            Grid.Row="1"
+            Grid.Row="2"
             Width="200"
             TextBlock.TextAlignment="Center"
             HorizontalAlignment="Center">
             <Button
                 HorizontalAlignment="Left"
                 Command="{Binding MoveToPreviosPageCommand}"
-                Content= "&lt;"
-                Width="30"/>
+                Width="30">
+                <Button.Content>
+                    <fa:IconImage Icon="ArrowLeft"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Background" Value="white"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsStartPage, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#878787"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <TextBlock
-                Margin="50 0 0 0"
+                Margin="45 0 0 0"
+                VerticalAlignment="Center"
+                FontSize="20"
                 HorizontalAlignment="Center">
                 <Run Text="{Binding CurrentPage,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Run Text=" - "/>
@@ -44,9 +184,24 @@
             </TextBlock>
             <Button
                 HorizontalAlignment="Right"
-                Content= "&gt;"
                 Command="{Binding MoveToNextPageCommand}"
-                 Width="30"/>
+                 Width="30">
+                <Button.Content>
+                    <fa:IconImage Icon="ArrowRight"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="white"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEndPage, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#878787"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </DockPanel>
     </Grid>
 </UserControl>
