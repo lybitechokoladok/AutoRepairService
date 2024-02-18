@@ -62,7 +62,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <fa:IconBlock 
+                        <fa:IconBlock
                         Icon="MagnifyingGlass"
                         Foreground="White"
                         HorizontalAlignment="Right"

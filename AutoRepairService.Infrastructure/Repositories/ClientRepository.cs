@@ -53,18 +53,24 @@ namespace AutoRepairService.Infrastructure.Repositories
 
         public async Task<IEnumerable<Client>> GetNextClientOffsetAsync(int size,int cursor)
         {
+
+
              var pagedClients = await _context.Clients
                 .Where(s => s.Id > cursor)
                 .Take(size)
+                .Include(c=> c.GenderCodeNavigation)
+                .Include(c=> c.Tags)
                 .ToListAsync();
 
-            return pagedClients;
+                return pagedClients;
         }
         public async Task<IEnumerable<Client>> GetPreviosClientOffsetAsync(int size,int cursor)
         {
 
             var pagedClients = await _context.Clients
                .Where (s => s.Id <= cursor - size && s.Id > cursor-(2*size))
+               .Include(c => c.GenderCodeNavigation)
+               .Include(c => c.Tags)
                .ToListAsync();
 
             return pagedClients;

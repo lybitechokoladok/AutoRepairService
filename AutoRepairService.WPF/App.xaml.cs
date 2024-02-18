@@ -12,6 +12,7 @@ using AutoRepairService.WPF.ViewModels;
 using AutoRepairService.WPF.HostBuilders;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using AutoRepairService.WPF.Services;
 
 namespace AutoRepairService.WPF
 {
@@ -30,6 +31,8 @@ namespace AutoRepairService.WPF
                 })
                 .ConfigureServices((context,services) =>
                 {
+                    services.AddStores();
+                    services.AddServices();
                     services.AddInfrastructure(context.Configuration);
                     services.AddViewModels();
                 })
@@ -39,6 +42,9 @@ namespace AutoRepairService.WPF
         protected override async void  OnStartup(StartupEventArgs e)
         {
             await _host.StartAsync();
+
+            INavigationService initialnavigationService = _host.Services.GetRequiredService<INavigationService>();
+            initialnavigationService.Navigate();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();

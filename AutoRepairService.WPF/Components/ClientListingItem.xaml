@@ -24,27 +24,73 @@
             Grid.Row="0"
             Orientation="Horizontal"
             HorizontalAlignment="Right">
-                <Button>
-                    <fa:IconImage 
-                    Icon="Pen"
-                    Width="20"
-                    Height="20"/>
+                <Button
+                    Background="Transparent"
+                    BorderThickness="0">
+                    <fa:IconImage
+                        Foreground="white"
+                        Icon="Pencil"
+                        Width="20"
+                        Height="20"/>
                 </Button>
                 <Button
-                Margin="20 0 0 0">
-                    <fa:IconImage 
-                    Icon="Trash" 
-                    Width="20"
-                    Height="20"/>
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Margin="20 0 0 0">
+                    <fa:IconImage
+                        Foreground="White"
+                        Icon="Trash" 
+                        Width="20"
+                        Height="20"/>
                 </Button>
             </StackPanel>
 
             <StackPanel
             Grid.Row="1"
             Orientation="Vertical">
-                <Image/>
-                <TextBlock Text="{Binding Id}"/>
-                <TextBlock Text="{Binding FullName}"/>
+                <TextBlock>
+                    <Run Text="{Binding Id, Mode=OneWay}"/>
+                    <Run Text="{Binding FullName, Mode=OneWay}"/>
+                </TextBlock>
+                <Image 
+                    Margin="0 20 0 20">
+                    <Image.Source>
+                        <Binding Path="ProfileImage">
+                            <Binding.TargetNullValue>
+                                <ImageSource>../Resources/Клиенты/icon-image-not-found.jpg</ImageSource>
+                            </Binding.TargetNullValue>
+                        </Binding>
+                    </Image.Source>
+                </Image>
+                <TextBlock>
+                    <Run Text="Поль"/>
+                    <Run Text="{Binding Gender, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="День рождения:"/>
+                    <Run Text="{Binding Birthday, Mode=OneWay, StringFormat=d}"/>
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="Телефон: "/>
+                    <Run Text="{Binding Phone, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="Email: "/>
+                    <Run Text="{Binding Email, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Text="Теги:"/>
+                <ListView ItemsSource="{Binding Tags}"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          VirtualizingPanel.IsVirtualizing="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock 
+                                Text="{Binding Path=Title, Mode=OneWay}"
+                                Foreground="{Binding Path=Color}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
         </Grid>
     </Border>

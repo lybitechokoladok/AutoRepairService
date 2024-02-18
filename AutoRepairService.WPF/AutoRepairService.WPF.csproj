@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Resources\Клиенты\1.jpg" />
+    <None Remove="Resources\Клиенты\icon-image-not-found.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +30,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.15">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -45,6 +48,11 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoRepairService.Domain\AutoRepairService.Domain.csproj" />
     <ProjectReference Include="..\AutoRepairService.Infrastructure\AutoRepairService.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Клиенты\1.jpg" />
+    <Resource Include="Resources\Клиенты\icon-image-not-found.jpg" />
   </ItemGroup>
 
 </Project>

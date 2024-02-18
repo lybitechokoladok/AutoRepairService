@@ -13,10 +13,7 @@ namespace AutoRepairService.WPF.HostBuilders
     {
         public static IServiceCollection AddViewModels(this IServiceCollection services) 
         {
-            services.AddSingleton<MainViewModel>(s=> new MainViewModel() 
-            {
-                CurrentViewModel = s.GetRequiredService<ClientListingViewModel>()
-            });
+            services.AddSingleton<MainViewModel>();
 
             services.AddScoped<ClientListingViewModel>(s=> new ClientListingViewModel(
                 s.GetRequiredService<IClientRepository>()));
