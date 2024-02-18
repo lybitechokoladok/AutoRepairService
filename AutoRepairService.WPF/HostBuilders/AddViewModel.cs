@@ -1,4 +1,6 @@
 ﻿using AutoRepairService.Domain.Repositories;
+using AutoRepairService.WPF.Services;
+using AutoRepairService.WPF.Stores;
 using AutoRepairService.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,7 +18,9 @@ namespace AutoRepairService.WPF.HostBuilders
             services.AddSingleton<MainViewModel>();
 
             services.AddScoped<ClientListingViewModel>(s=> new ClientListingViewModel(
-                s.GetRequiredService<IClientRepository>()));
+                s.GetRequiredService<IClientRepository>(),
+                CreateClientDetailFormnavigationService(s)));
+            services.AddScoped<ClientDetailFormViewModel>();
 
             services.AddSingleton<MainWindow>(s => new MainWindow()
             {
@@ -24,6 +28,13 @@ namespace AutoRepairService.WPF.HostBuilders
             }) ;
 
             return services;
+        }
+
+        private static INavigationService CreateClientDetailFormnavigationService(IServiceProvider s)
+        {
+            return new ModalNavigationService<ClientDetailFormViewModel>(
+                s.GetRequiredService<ModalNavigationStore>(),
+                () => s.GetRequiredService<ClientDetailFormViewModel>());
         }
     }
 }

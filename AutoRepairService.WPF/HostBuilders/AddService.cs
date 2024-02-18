@@ -22,7 +22,7 @@ namespace AutoRepairService.WPF.HostBuilders
 
         private static INavigationService CreateStartNavigationService(IServiceProvider s)
         {
-            return new NavigationService<ClientListingItemViewModel>(
+            return new NavigationService<ClientListingViewModel>(
                 s.GetRequiredService<NavigationStore>(),
                 () => s.GetRequiredService<ClientListingViewModel>());
         }

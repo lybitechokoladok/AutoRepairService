@@ -112,6 +112,7 @@
             Grid.Row="1"
             Background="Transparent"
             ItemsSource="{Binding ClientCollectionView}"
+            SelectedItem="{Binding SelectedClient}"
             VirtualizingPanel.IsVirtualizing="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">

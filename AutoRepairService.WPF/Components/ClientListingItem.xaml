@@ -26,7 +26,8 @@
             HorizontalAlignment="Right">
                 <Button
                     Background="Transparent"
-                    BorderThickness="0">
+                    BorderThickness="0"
+                    Command="{Binding OpenClientDetailFormCommand}">
                     <fa:IconImage
                         Foreground="white"
                         Icon="Pencil"

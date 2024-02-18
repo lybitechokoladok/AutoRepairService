@@ -1,8 +1,11 @@
 ﻿using AutoRepairService.Domain.Dtos;
 using AutoRepairService.Domain.Entities;
 using AutoRepairService.Domain.Repositories;
+using AutoRepairService.WPF.Services;
+using AutoRepairService.WPF.Stores;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +25,7 @@ namespace AutoRepairService.WPF.ViewModels
         private int _cursor = 0;
 
         private readonly IClientRepository _clientRepository;
+        private readonly INavigationService _navigationService;
 
         private ObservableCollection<ClientListingItemViewModel> _clients;
 
@@ -42,23 +46,34 @@ namespace AutoRepairService.WPF.ViewModels
         [ObservableProperty]
         private bool isEndPage;
 
+        [ObservableProperty]
+        private ClientListingItemViewModel selectedClient;
+
         public IAsyncRelayCommand LoadClientOffsetCommand { get; }
         public IAsyncRelayCommand MoveToNextPageCommand { get; }
         public IAsyncRelayCommand MoveToPreviosPageCommand { get; }
-        public ClientListingViewModel(IClientRepository clientRepository)
+        public RelayCommand OpenClientDetailFormCommand { get; }
+        public ClientListingViewModel(
+            IClientRepository clientRepository,
+            INavigationService openClientDetailFormNavigationService)
         {
             _clients = new ObservableCollection<ClientListingItemViewModel>();
 
             _clientRepository = clientRepository;
+            _navigationService = openClientDetailFormNavigationService;
 
             ClientCollectionView = CollectionViewSource.GetDefaultView(_clients);
 
             LoadClientOffsetCommand = new AsyncRelayCommand(LoadClientOffset);
             MoveToNextPageCommand = new AsyncRelayCommand(LoadClientOffset);
             MoveToPreviosPageCommand = new AsyncRelayCommand(LoadPreviosClientOffset);
+            OpenClientDetailFormCommand = new RelayCommand(OpenClientDetailForm);
 
             LoadClientOffsetCommand.Execute(null);
         }
+
+        private void OpenClientDetailForm()
+        => _navigationService.Navigate();
 
         private async Task LoadPreviosClientOffset()
         {
@@ -83,7 +98,7 @@ namespace AutoRepairService.WPF.ViewModels
         private void AddClient(Client client)
         {
             ClientListingItemViewModel itemViewModel =
-                new ClientListingItemViewModel(client);
+                new ClientListingItemViewModel(client, OpenClientDetailFormCommand);
             _clients.Add(itemViewModel);
         }
 

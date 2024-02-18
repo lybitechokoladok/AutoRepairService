@@ -1,8 +1,11 @@
 ﻿using AutoRepairService.Domain.Entities;
 using AutoRepairService.Domain.ValueObjects;
+using AutoRepairService.WPF.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +13,7 @@ using System.Windows.Automation;
 
 namespace AutoRepairService.WPF.ViewModels
 {
-    public partial class ClientListingItemViewModel : ObservableValidator
+    public class ClientListingItemViewModel 
     {
         public Client Client { get; set; }
         public int Id => Client.Id;
@@ -25,9 +28,12 @@ namespace AutoRepairService.WPF.ViewModels
         public int VisitCount => Client.ClientServices.Count();
         public List<Tag> Tags => Client.Tags.ToList();
 
-        public ClientListingItemViewModel(Client client)
+        public IRelayCommand OpenClientDetailFormCommand { get; }
+        public ClientListingItemViewModel(Client client, IRelayCommand openClientDetailFormCommand)
         {
             Client = client;
+
+            OpenClientDetailFormCommand = openClientDetailFormCommand;
         }
     }
 }
