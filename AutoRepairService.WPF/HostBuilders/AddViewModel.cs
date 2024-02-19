@@ -19,8 +19,10 @@ namespace AutoRepairService.WPF.HostBuilders
 
             services.AddScoped<ClientListingViewModel>(s=> new ClientListingViewModel(
                 s.GetRequiredService<IClientRepository>(),
-                CreateClientDetailFormnavigationService(s)));
-            services.AddScoped<ClientDetailFormViewModel>();
+                s.GetRequiredService<SelectedClientStore>(),
+                CreateClientDetailFormNavigationService(s)));
+            services.AddScoped<ClientDetailFormViewModel>(s => new ClientDetailFormViewModel(
+                s.GetRequiredService<SelectedClientStore>()));
 
             services.AddSingleton<MainWindow>(s => new MainWindow()
             {
@@ -30,7 +32,7 @@ namespace AutoRepairService.WPF.HostBuilders
             return services;
         }
 
-        private static INavigationService CreateClientDetailFormnavigationService(IServiceProvider s)
+        private static INavigationService CreateClientDetailFormNavigationService(IServiceProvider s)
         {
             return new ModalNavigationService<ClientDetailFormViewModel>(
                 s.GetRequiredService<ModalNavigationStore>(),

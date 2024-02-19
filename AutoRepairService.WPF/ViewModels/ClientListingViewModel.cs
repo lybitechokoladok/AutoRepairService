@@ -21,15 +21,17 @@ namespace AutoRepairService.WPF.ViewModels
 {
     public partial class ClientListingViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private int _cursor = 0;
 
         private readonly IClientRepository _clientRepository;
         private readonly INavigationService _navigationService;
+        private readonly SelectedClientStore _selectedClientStore;
 
         private ObservableCollection<ClientListingItemViewModel> _clients;
 
         public ICollectionView ClientCollectionView { get; }
+
+        [ObservableProperty]
+        private int _cursor = 0;
 
         [ObservableProperty]
         private int currentPage = 1;
@@ -46,8 +48,18 @@ namespace AutoRepairService.WPF.ViewModels
         [ObservableProperty]
         private bool isEndPage;
 
-        [ObservableProperty]
-        private ClientListingItemViewModel selectedClient;
+        private ClientListingItemViewModel _selectedClient;
+        public ClientListingItemViewModel SelectedClient 
+        {
+            get => _selectedClient;
+            set 
+            {
+                _selectedClient = value;
+                OnPropertyChanged(nameof(SelectedClient));
+
+                _selectedClientStore.SelectedClient = _selectedClient.Client;
+            }
+        }
 
         public IAsyncRelayCommand LoadClientOffsetCommand { get; }
         public IAsyncRelayCommand MoveToNextPageCommand { get; }
@@ -55,12 +67,14 @@ namespace AutoRepairService.WPF.ViewModels
         public RelayCommand OpenClientDetailFormCommand { get; }
         public ClientListingViewModel(
             IClientRepository clientRepository,
+            SelectedClientStore selectedClientStore,
             INavigationService openClientDetailFormNavigationService)
         {
             _clients = new ObservableCollection<ClientListingItemViewModel>();
 
             _clientRepository = clientRepository;
             _navigationService = openClientDetailFormNavigationService;
+            _selectedClientStore = selectedClientStore;
 
             ClientCollectionView = CollectionViewSource.GetDefaultView(_clients);
 

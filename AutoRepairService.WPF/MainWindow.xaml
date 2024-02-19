@@ -14,6 +14,9 @@
         <DataTemplate DataType="{x:Type vm:ClientListingViewModel}">
             <v:ClientListnigViewModel/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ClientDetailFormViewModel}">
+            <v:ClientDetailsFormView/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <ContentControl

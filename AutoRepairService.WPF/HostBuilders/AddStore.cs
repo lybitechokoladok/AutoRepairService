@@ -15,6 +15,8 @@ namespace AutoRepairService.WPF.HostBuilders
         {
             services.AddSingleton<NavigationStore>();
             services.AddSingleton<ModalNavigationStore>();
+            services.AddSingleton<SelectedClientStore>();
+            services.AddSingleton<SelectedClientStore>();
 
             return services;
         }

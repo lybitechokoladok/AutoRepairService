@@ -54,6 +54,8 @@
                     <Run Text="{Binding FullName, Mode=OneWay}"/>
                 </TextBlock>
                 <Image 
+                    Width="200"
+                    Height="200"
                     Margin="0 20 0 20">
                     <Image.Source>
                         <Binding Path="ProfileImage">
@@ -87,8 +89,8 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock 
-                                Text="{Binding Path=Title, Mode=OneWay}"
-                                Foreground="{Binding Path=Color}"/>
+                                Text="{Binding Title, Mode=OneWay}"
+                                Foreground="{Binding Color}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

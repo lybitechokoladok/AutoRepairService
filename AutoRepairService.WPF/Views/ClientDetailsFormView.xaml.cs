@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoRepairService.WPF.Components
+namespace AutoRepairService.WPF.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ClientDetailForm.xaml
+    /// Логика взаимодействия для ClientDetailsFormView.xaml
     /// </summary>
-    public partial class ClientDetailForm : UserControl
+    public partial class ClientDetailsFormView : UserControl
     {
-        public ClientDetailForm()
+        public ClientDetailsFormView()
         {
             InitializeComponent();
         }
