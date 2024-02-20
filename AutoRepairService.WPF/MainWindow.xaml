@@ -12,7 +12,7 @@
         Background="#f1f1f1">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:ClientListingViewModel}">
-            <v:ClientListnigViewModel/>
+            <v:ClientListnigView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ClientDetailFormViewModel}">
             <v:ClientDetailsFormView/>

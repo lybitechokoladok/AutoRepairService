@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace AutoRepairService.WPF.ViewModels
 {
-    public sealed class ClientDetailFormViewModel : ObservableValidator
+    public partial class ClientDetailFormViewModel : ObservableValidator
     {
         private const string EmailRegexPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 

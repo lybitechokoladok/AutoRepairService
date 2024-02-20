@@ -18,9 +18,9 @@ namespace AutoRepairService.WPF.Views
     /// <summary>
     /// Логика взаимодействия для ClientListnigViewModel.xaml
     /// </summary>
-    public partial class ClientListnigViewModel : UserControl
+    public partial class ClientListnigView : UserControl
     {
-        public ClientListnigViewModel()
+        public ClientListnigView()
         {
             InitializeComponent();
         }
