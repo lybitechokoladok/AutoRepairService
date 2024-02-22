@@ -138,31 +138,46 @@ namespace AutoRepairService.WPF.ViewModels
                 Name = Gender,
             };
 
-            var client = new Client() 
-            {
-                Id = Id,
-                FirstName = FirstName,
-                LastName = LastName,
-                Patronymic = Patronomic,
-                Birthday=Birthday,
-                RegistrationDate = RegistrationDate,
-                Email = Email,
-                Phone = Phone,
-                GenderCode = genderCode,
-                GenderCodeNavigation = gender,
-                PhotoPath = ImagePath,
-            };
 
             try
             {
                 if (_clientStore.SelectedClient is not null)
                 {
-                    _clientRepository.Update(client);
-                    _clientStore.SelectedClient = client;
+                    var clientForUpdate = new Client()
+                    {
+                        Id = Id,
+                        FirstName = FirstName,
+                        LastName = LastName,
+                        Patronymic = Patronomic,
+                        Birthday = Birthday,
+                        RegistrationDate = RegistrationDate,
+                        Email = Email,
+                        Phone = Phone,
+                        GenderCode = genderCode,
+                        GenderCodeNavigation = gender,
+                        PhotoPath = ImagePath,
+                    };
+
+                    _clientRepository.Update(clientForUpdate);
+                    _clientStore.SelectedClient = clientForUpdate;
                 }
                 else
                 {
-                    _clientRepository.Add(client);
+                    var clientForAdd = new Client()
+                    {
+                        Id = Id,
+                        FirstName = FirstName,
+                        LastName = LastName,
+                        Patronymic = Patronomic,
+                        Birthday = Birthday,
+                        RegistrationDate = RegistrationDate,
+                        Email = Email,
+                        Phone = Phone,
+                        GenderCode = genderCode,
+                        PhotoPath = ImagePath,
+                    };
+
+                    _clientRepository.Add(clientForAdd);
                 }
             }
             catch (Exception ex)
@@ -192,7 +207,7 @@ namespace AutoRepairService.WPF.ViewModels
 
         public static ValidationResult ValidateEmail(string value)
         {
-            MailAddress mailAddress = new MailAddress(value);
+           MailAddress mailAddress = new MailAddress(value);
             bool isValid = string.IsNullOrEmpty(mailAddress.DisplayName);
 
             if (isValid)

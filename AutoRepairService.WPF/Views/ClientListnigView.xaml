@@ -90,19 +90,9 @@
                         </RibbonGallery>
                     </RibbonComboBox>
                 </StackPanel>
-                <StackPanel
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Bottom">
-                    <RadioButton Content="10">
-                    </RadioButton>
-                    <RadioButton Content="50">
-                    </RadioButton>
-                    <RadioButton Content="200">
-                    </RadioButton>
-                    <RadioButton Content="Все">
-                    </RadioButton>
-                </StackPanel>
+                <Button
+                    Content="Добавить"
+                    Command="{Binding OpenClientDetailFormCommand}"/>
             </DockPanel>
         </Border>
 
