@@ -17,7 +17,7 @@ namespace AutoRepairService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
         {
-            string connectionString = configuration.GetConnectionString("Desktop");
+            string connectionString = configuration.GetConnectionString("Default");
 
             services.AddDbContext<AutoRepairServiceDbContext>(options => options.UseSqlServer(connectionString));
 

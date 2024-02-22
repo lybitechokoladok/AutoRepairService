@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Resources\Assets\default-client-image.png" />
     <None Remove="Resources\Клиенты\1.jpg" />
     <None Remove="Resources\Клиенты\icon-image-not-found.jpg" />
   </ItemGroup>
@@ -52,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Assets\default-client-image.png" />
     <Resource Include="Resources\Клиенты\1.jpg" />
     <Resource Include="Resources\Клиенты\icon-image-not-found.jpg" />
   </ItemGroup>

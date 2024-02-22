@@ -24,7 +24,9 @@
             Content="{Binding CurrentViewModel}"/>
 
         <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsOpen}">
-            <ContentControl Content="{Binding CurrentModalViewModel}"/>
+            <ContentControl 
+                Margin="20"
+                Content="{Binding CurrentModalViewModel}"/>
         </custom:Modal>
     </Grid>
 </Window>

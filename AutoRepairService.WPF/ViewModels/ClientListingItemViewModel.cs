@@ -29,11 +29,17 @@ namespace AutoRepairService.WPF.ViewModels
         public List<Tag> Tags => Client.Tags.ToList();
 
         public IRelayCommand OpenClientDetailFormCommand { get; }
-        public ClientListingItemViewModel(Client client, IRelayCommand openClientDetailFormCommand)
+        public IRelayCommand DeleteClientCommand { get; }
+        public ClientListingItemViewModel(
+            Client client,
+            IRelayCommand openClientDetailFormCommand,
+            IRelayCommand deleteClientRelayCommand)
         {
             Client = client;
 
             OpenClientDetailFormCommand = openClientDetailFormCommand;
+            DeleteClientCommand = deleteClientRelayCommand;
+
         }
     }
 }

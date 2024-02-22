@@ -60,6 +60,7 @@ namespace AutoRepairService.Infrastructure.Repositories
                 .Take(size)
                 .Include(c=> c.GenderCodeNavigation)
                 .Include(c=> c.Tags)
+                .AsNoTracking()
                 .ToListAsync();
 
                 return pagedClients;
@@ -71,11 +72,33 @@ namespace AutoRepairService.Infrastructure.Repositories
                .Where (s => s.Id <= cursor - size && s.Id > cursor-(2*size))
                .Include(c => c.GenderCodeNavigation)
                .Include(c => c.Tags)
+               .AsNoTracking()
                .ToListAsync();
 
             return pagedClients;
         }
 
         public Task<int> GetClientsCountAsync() => _context.Clients.CountAsync();
+
+        public void Remove(Client client)
+        {
+             _context.Clients.Remove(client);
+
+            _context.SaveChanges();
+        }
+
+        public void Update(Client client)
+        {
+            _context.Clients.Update(client);
+
+            _context.SaveChanges();
+        }
+
+        public void Add(Client client)
+        {
+            _context.Clients.Add(client);
+
+            _context.SaveChanges();
+        }
     }
 }

@@ -4,8 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoRepairService.WPF.Views"
+             xmlns:materailDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:AutoRepairService.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:StringToPhoneConverter x:Key="StringToPhoneConverter"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+            <Setter Property="materailDesign:ValidationAssist.UsePopup" Value="True"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0 20 0 0"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,33 +31,163 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0"
+            <StackPanel Grid.Column="0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
 
+                <TextBox
+                        materailDesign:HintAssist.Hint="Введите Имя">
+                    <TextBox.Text>
+                        <Binding Path="FirstName"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                    <TextBox
-                Grid.Column="0"
-                Height="30"
-                Width="200"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding Email}"/>
+                <TextBox
+                    materailDesign:HintAssist.Hint="Введите фамилию">
+                    <TextBox.Text>
+                        <Binding Path="LastName"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                    
+                <TextBox
+                    materailDesign:HintAssist.Hint="Введите отчество"
+                    materailDesign:TextFieldAssist.SuffixText="не обязателено">
+                    <TextBox.Text>
+                        <Binding Path="Patronomic"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                    <TextBox
-                Grid.Column="1"
-                Grid.Row="0"
-                Height="30"
-                Width="200"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding FirstName,
-                    ValidatesOnExceptions=True,
-                    ValidatesOnDataErrors=True, 
-                    UpdateSourceTrigger=PropertyChanged, 
-                    NotifyOnValidationError=True}"/>
+                <DatePicker
+                    materailDesign:HintAssist.Hint="День рождения"
+                    Margin="0 20 0 0"
+                    Style="{DynamicResource MaterialDesignDatePicker}">
+                    <DatePicker.SelectedDate>
+                        <Binding Path="Birthday"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DatePicker.SelectedDate>
+                </DatePicker>
 
+                <TextBox
+                     materailDesign:HintAssist.Hint="Введите Email"
+                     materailDesign:TextFieldAssist.SuffixText="не обязателен">
+                    <TextBox.Text>
+                        <Binding Path="Email"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox
+                      materailDesign:HintAssist.Hint="Введите телефон">
+                    <TextBox.Text>
+                        <Binding Path="Phone"
+                                 Converter="{StaticResource StringToPhoneConverter}"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <StackPanel
+                    Margin="0 20 0 0"
+                    Orientation="Horizontal">
+                    <RadioButton
+                        IsChecked="{Binding IsMen}"
+                        Command="{Binding SetMenGenderCommand}"
+                        Content="Мужчина"/>
+                    <RadioButton
+                        Margin="20 0 0 0"
+                        IsChecked="{Binding IsWomen}"
+                        Command="{Binding SetWomenGenderCommand}"
+                        Content="Женщина"/>
                 </StackPanel>
-            </Grid>
+            </StackPanel>
+
+            <DockPanel
+                Grid.Column="1">
+                <Border
+                    DockPanel.Dock="Top"
+                    Margin="30 0 0 0"
+                    Height="200"
+                    Width="200"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                    Stretch="Uniform">
+                        <Image.Source>
+                            <Binding Path="ImagePath">
+                                <Binding.TargetNullValue>
+                                    <ImageSource>/Resources/Assets/default-client-image.png</ImageSource>
+                                </Binding.TargetNullValue>
+                            </Binding>
+                        </Image.Source>
+                    </Image>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="DarkGray"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Border.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding AddImageCommand, Mode=OneTime}"/>
+                    </Border.InputBindings>
+                </Border>
+
+                <StackPanel
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    DockPanel.Dock="Bottom">
+                    <Button
+                        Content="Отмена"
+                        Command="{Binding CloseClientDetailFormCommand}"/>
+                    <Button
+                        Margin="20 0 0 0"
+                        Content="Сохранить"
+                        Command="{Binding SaveClientCommand}"/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
     </Grid>
 </UserControl>

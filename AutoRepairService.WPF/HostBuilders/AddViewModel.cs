@@ -17,12 +17,14 @@ namespace AutoRepairService.WPF.HostBuilders
         {
             services.AddSingleton<MainViewModel>();
 
-            services.AddScoped<ClientListingViewModel>(s=> new ClientListingViewModel(
+            services.AddTransient<ClientListingViewModel>(s=> new ClientListingViewModel(
                 s.GetRequiredService<IClientRepository>(),
                 s.GetRequiredService<SelectedClientStore>(),
                 CreateClientDetailFormNavigationService(s)));
-            services.AddScoped<ClientDetailFormViewModel>(s => new ClientDetailFormViewModel(
-                s.GetRequiredService<SelectedClientStore>()));
+            services.AddTransient<ClientDetailFormViewModel>(s => new ClientDetailFormViewModel(
+                s.GetRequiredService<SelectedClientStore>(),
+                s.GetRequiredService<ModalNavigationStore>(),
+                s.GetRequiredService<IClientRepository>()));
 
             services.AddSingleton<MainWindow>(s => new MainWindow()
             {

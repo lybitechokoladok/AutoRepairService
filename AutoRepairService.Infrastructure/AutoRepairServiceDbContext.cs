@@ -15,7 +15,7 @@ namespace AutoRepairService.Infrastructure
         public AutoRepairServiceDbContext(DbContextOptions options)
             : base(options)
         {
-            
+        
         }
         public  DbSet<Client> Clients { get; set; }
 

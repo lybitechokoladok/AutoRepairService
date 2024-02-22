@@ -18,5 +18,8 @@ namespace AutoRepairService.Domain.Repositories
         Task<IEnumerable<Client>> GetNextClientOffsetAsync(int size, int cursor);
         Task<IEnumerable<Client>> GetPreviosClientOffsetAsync(int size,int cursor);
         Task<int> GetClientsCountAsync();
+        void Remove(Client client);
+        void Update(Client client);
+        void Add(Client client);
     }
 }

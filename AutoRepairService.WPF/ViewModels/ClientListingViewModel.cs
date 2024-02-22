@@ -57,14 +57,15 @@ namespace AutoRepairService.WPF.ViewModels
                 _selectedClient = value;
                 OnPropertyChanged(nameof(SelectedClient));
 
-                _selectedClientStore.SelectedClient = _selectedClient.Client;
+                _selectedClientStore.SelectedClient = _selectedClient?.Client;
             }
         }
 
         public IAsyncRelayCommand LoadClientOffsetCommand { get; }
         public IAsyncRelayCommand MoveToNextPageCommand { get; }
         public IAsyncRelayCommand MoveToPreviosPageCommand { get; }
-        public RelayCommand OpenClientDetailFormCommand { get; }
+        public IRelayCommand DeleteClientCommand { get; }
+        public IRelayCommand OpenClientDetailFormCommand { get; }
         public ClientListingViewModel(
             IClientRepository clientRepository,
             SelectedClientStore selectedClientStore,
@@ -82,8 +83,15 @@ namespace AutoRepairService.WPF.ViewModels
             MoveToNextPageCommand = new AsyncRelayCommand(LoadClientOffset);
             MoveToPreviosPageCommand = new AsyncRelayCommand(LoadPreviosClientOffset);
             OpenClientDetailFormCommand = new RelayCommand(OpenClientDetailForm);
+            DeleteClientCommand = new RelayCommand(DeleteClient);
 
             LoadClientOffsetCommand.Execute(null);
+        }
+
+        private void DeleteClient()
+        {
+            _clientRepository.Remove(SelectedClient.Client);
+            _clients.Remove(SelectedClient);
         }
 
         private void OpenClientDetailForm()
@@ -112,7 +120,7 @@ namespace AutoRepairService.WPF.ViewModels
         private void AddClient(Client client)
         {
             ClientListingItemViewModel itemViewModel =
-                new ClientListingItemViewModel(client, OpenClientDetailFormCommand);
+                new ClientListingItemViewModel(client, OpenClientDetailFormCommand, DeleteClientCommand);
             _clients.Add(itemViewModel);
         }
 
@@ -122,7 +130,7 @@ namespace AutoRepairService.WPF.ViewModels
             {
                 RecordsCount = await _clientRepository.GetClientsCountAsync();
 
-                TotalPage = RecordsCount / 20;
+                TotalPage = (RecordsCount + (4-1)) / 20;
             }
 
             var clientOffset = await _clientRepository.GetNextClientOffsetAsync(20, Cursor);
